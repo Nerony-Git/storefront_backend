@@ -41,6 +41,21 @@ export class UserStore {
             throw new Error ("Failed to load user with ID: " + uid + " because, " + error);
         }
     }
+
+    async update(u: User): Promise<User> {
+        try {
+            const conn = await client.connect();
+            const sql = "UPDATE user_details SET first_name = $1, last_name = $2, username = $3, password = $4 WHERE sn = $5 RETURNING *";
+            const hash = bcrypt.hashSync(u.password + BCRYPT_PASSWORD, parseInt(SALT_ROUNDS as string));
+            const result = await conn.query(sql, [u.first_name, u.last_name, u.username, hash, u.sn]);
+            const user = result.rows[0];
+            conn.release();
+
+            return user;
+        }catch (error){
+            throw new Error ("Failed to update details of user with username: " + u.username + " because, " + error);
+        }
+    }
     
     async authenticate(username: string, password: string): Promise<User | null> {
         const conn = await client.connect();
