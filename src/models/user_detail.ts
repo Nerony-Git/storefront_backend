@@ -56,6 +56,20 @@ export class UserStore {
             throw new Error ("Failed to update details of user with username: " + u.username + " because, " + error);
         }
     }
+
+    async delete(uid: string): Promise<User> {
+        try{
+            const conn = await client.connect();
+            const sql = "DELETE FROM user_details WHERE sn = $1";
+            const result = await conn.query(sql, [uid]);
+            const user = result.rows[0];
+            conn.release();
+
+            return user;
+        }catch (error){
+            throw new Error("User with ID: " + uid + " can't be deleted because, " + error);
+        }
+    }
     
     async authenticate(username: string, password: string): Promise<User | null> {
         const conn = await client.connect();
