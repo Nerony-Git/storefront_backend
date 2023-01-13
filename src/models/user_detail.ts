@@ -16,22 +16,35 @@ export type User = {
 export class UserStore {
     async create(u: User): Promise<User> {
         try {
-            // @ts-ignore
             const conn = await client.connect();
             const sql = "INSERT INTO user_details (user_id, first_name, last_name, username, password) VALUES ($1, $2, $3, $4, $5) RETURNING *";
             const hash = bcrypt.hashSync(u.password + BCRYPT_PASSWORD, parseInt(SALT_ROUNDS as string));
             const result = await conn.query(sql, [u.user_id, u.first_name, u.last_name, u.username, hash]);
             const user = result.rows[0];
+            conn.release();
 
             return user;
         }catch (error){
             throw new Error("Unable to create user " + u.username + " because, " + error);
         }
     }
+
+    async read(uid: string): Promise<User> {
+        try{
+            const conn = await client.connect();
+            const sql = "SELECT * FROM user_details WHERE sn = $1";
+            const result = await conn.query(sql, [uid]);
+            conn.release();
+
+            return result.rows[0];
+        }catch (error){
+            throw new Error ("Failed to load user with ID: " + uid + " because, " + error);
+        }
+    }
     
     async authenticate(username: string, password: string): Promise<User | null> {
         const conn = await client.connect();
-        const sql = "SELECT * FROM user_details WHERE username=$1";
+        const sql = "SELECT * FROM user_details WHERE username = $1";
         const result = await conn.query(sql, [username]);
 
         return null
