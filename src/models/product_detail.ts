@@ -66,4 +66,18 @@ export class ProductStore {
         }
     }
 
+    async index(): Promise<Product[]> {
+        try{
+            const conn = await client.connect();
+            const sql = "SELECT * FROM product_details";
+            const result = await conn.query(sql);
+            const products = result.rows;
+            conn.release();
+
+            return products;
+        }catch(error){
+            throw new Error("Can not get products because, " + error);
+        }
+    }
+
 }
