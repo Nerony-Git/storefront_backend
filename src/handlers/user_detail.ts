@@ -70,10 +70,15 @@ const login = async (req: Request, res: Response) => {
     }
 };
 
+const token_decoded = async (req: Request, res: Response) => {
+    res.send(res.locals.decoded.user);
+}
+
 
 export default {
     create,
     read,
     index,
-    login
+    login,
+    token_decoded
 }
