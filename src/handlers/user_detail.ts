@@ -23,3 +23,13 @@ const create = async (req: Request, res: Response) => {
         res.json({error })
     }
 };
+
+const read = async (req: Request, res: Response) => {
+    try {
+        const user = await store.read(req.params.sn);
+        res.json(user);
+    }catch (error){
+        res.status(400);
+        res.json(error);
+    }
+};
