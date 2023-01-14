@@ -44,3 +44,16 @@ const remove = async (req: Request, res: Response) => {
         res.status(400).send({message: "Failed to delete order because, " + error});
     }
 };
+
+const index = async (req: Request, res: Response) => {
+    try {
+        const orders = await store.index();
+        res.status(200).json({
+            results: orders,
+            message: orders.length + " orders was retrieved successfully."
+        });
+    }catch(error) {
+        res.status(400).send({message: "Failed to retrieve orders because, " + error});
+    }
+};
+
