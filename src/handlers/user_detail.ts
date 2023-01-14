@@ -33,3 +33,16 @@ const read = async (req: Request, res: Response) => {
         res.json(error);
     }
 };
+
+const index = async (req: Request, res: Response) => {
+    try{
+        const users = await store.index();
+        res.status(200).json({
+            results: users,
+            message: users.length + " users details was retrieved successfully"
+        });
+    }catch (error){
+        res.status(400);
+        res.json("Token rejected because, " + error);
+    }
+};
