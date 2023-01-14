@@ -1,5 +1,4 @@
 import {Request, Response} from "express";
-import token_authenticator from "../middleware/verify_jwt";
 import { User, UserStore } from "../models/user_detail";
 import * as jwt from "jsonwebtoken";
 
@@ -70,3 +69,11 @@ const login = async (req: Request, res: Response) => {
         res.json({error});
     }
 };
+
+
+export default {
+    create,
+    read,
+    index,
+    login
+}
