@@ -36,4 +36,19 @@ export class OrderStore {
         }
     }
 
+    async delete(oid: number): Promise<Order> {
+        try {
+            const conn = await client.connect();
+            const sql = "DELETE FROM orders WHERE sn = $1";
+            const result = await conn.query(sql,[oid]);
+            const order = result.rows[0];
+            conn.release();
+
+            return order;
+        }catch (error){
+            throw new Error("Order with ID: " + oid + " can't be deleted because, " + error);
+            
+        }
+    }
+
 }
