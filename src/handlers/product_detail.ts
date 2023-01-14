@@ -65,3 +65,15 @@ const remove = async (req: Request, res: Response) => {
         res.status(400).send({message: "Failed to delete product because, " + error});
     }
 }
+
+const index = async (req: Request, res: Response) => {
+    try {
+        const products = await store.index();
+        res.status(200).json({
+            results: products,
+            message: products.length + " products was retrieved successfully."
+        });
+    }catch (error) {
+        res.status(400).send({ message: "Failed to retrieve products because, " + error});
+    }
+}
