@@ -77,3 +77,12 @@ const index = async (req: Request, res: Response) => {
         res.status(400).send({ message: "Failed to retrieve products because, " + error});
     }
 }
+
+
+export default {
+    create,
+    read,
+    update,
+    remove,
+    index
+}
