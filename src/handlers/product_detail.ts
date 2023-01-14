@@ -23,7 +23,7 @@ const create = async (req: Request, res: Response) => {
 
 const read = async (req: Request, res: Response) => {
     try {
-        const product_id: number = parseInt(req.params.sn);
+        const product_id: number = parseInt(req.params.id);
         const product = await store.read(product_id);
         res.status(200).json({
             results: product,
@@ -35,7 +35,7 @@ const read = async (req: Request, res: Response) => {
 };
 
 const update = async (req: Request, res: Response) => {
-    const product_id: number = +req.params.sn;
+    const product_id: number = +req.params.id;
     const product: Product = {
         product_id: req.body.product_id,
         product_name: req.body.product_name,
@@ -54,7 +54,7 @@ const update = async (req: Request, res: Response) => {
 }
 
 const remove = async (req: Request, res: Response) => {
-    const product_id: number = +req.params.sn;
+    const product_id: number = +req.params.id;
     try {
         const removed_product = await store.delete(product_id);
         res.status(200).json({
