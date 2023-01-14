@@ -57,3 +57,9 @@ const index = async (req: Request, res: Response) => {
     }
 };
 
+export default {
+    create,
+    read,
+    remove,
+    index
+}
