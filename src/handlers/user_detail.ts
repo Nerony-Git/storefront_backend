@@ -11,7 +11,7 @@ const create = async (req: Request, res: Response) => {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         username: req.body.username,
-        password: req.body.password,
+        password: req.body.password
     };
     try {
         const new_user = await store.create(user);
@@ -44,5 +44,29 @@ const index = async (req: Request, res: Response) => {
     }catch (error){
         res.status(400);
         res.json("Token rejected because, " + error);
+    }
+};
+
+const login = async (req: Request, res: Response) => {
+    const user_input: User = {
+        user_id: req.body.user_id,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        username: req.body.username,
+        password: req.body.password
+    };
+    try {
+        const user = await store.authenticate(user_input.username, user_input.password);
+        if (user === null) {
+            res.json("Please sign up first.");
+        }else {
+            const token = jwt.sign(
+                {name: user.first_name + " " + user.last_name}, process.env.TOKEN_SECRET+"");
+                res.json({idToken:token});
+        }
+
+    }catch (error){
+        res.status(401);
+        res.json({error});
     }
 };
