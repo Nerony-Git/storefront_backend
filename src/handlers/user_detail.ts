@@ -13,4 +13,13 @@ const create = async (req: Request, res: Response) => {
         username: req.body.username,
         password: req.body.password,
     };
-}
+    try {
+        const new_user = await store.create(user);
+        const token = jwt.sign(
+            {name: new_user.first_name + " " + new_user.last_name}, process.env.TOKEN_SECRET+"");
+            res.json({idToken:token});
+    }catch (error) {
+        res.status(400);
+        res.json({error })
+    }
+};
