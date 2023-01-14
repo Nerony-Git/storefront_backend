@@ -52,4 +52,18 @@ export class ProductStore {
         }
     }
 
+    async delete(pid: number): Promise<Product> {
+        try {
+            const conn = await client.connect();
+            const sql = "DELETE FROM product_details WHERE sn = $1";
+            const result = await conn.query(sql, [pid]);
+            const product = result.rows[0];
+            conn.release();
+
+            return product;
+        }catch(error){
+            throw new Error("Product with ID: " + pid + "can't be deleted because, " + error);
+        }
+    }
+
 }
