@@ -88,4 +88,18 @@ export class UserStore {
 
         return null;
     }
+
+    async index(): Promise<User[]> {
+        try {
+            const conn = await client.connect();
+            const sql = "SELECT * FROM user_details";
+            const result = await conn.query(sql);
+            const users = result.rows;
+            conn.release();
+
+            return users;
+        }catch (error){
+            throw new Error ("Can not get users because, " + error);
+        }
+    }
 }
