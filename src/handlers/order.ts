@@ -19,3 +19,16 @@ const create = async (req: Request, res: Response) => {
     }
 };
 
+const read = async (req: Request, res: Response) => {
+    const order_id: number = +req.params.sn;
+    try {
+        const order = await store.read(order_id);
+        res.status(200).json({
+            results: order,
+            message: "Order with ID: " + order_id + " was retrieved successfully."
+        });
+    }catch(error) {
+        res.status(400).send({message: "Failed to retrieve order because, " + error});
+    }
+};
+
