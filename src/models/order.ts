@@ -51,4 +51,19 @@ export class OrderStore {
         }
     }
 
+    async index(): Promise<Order[]> {
+        try{
+            const conn = await client.connect();
+            const sql = "SELECT * FROM orders";
+            const result = await conn.query(sql);
+            const order = result.rows;
+            conn.release();
+
+            return order;
+        }catch (error){
+            throw new Error("Can not get orders because, " + error);
+            
+        }
+    }
+
 }
