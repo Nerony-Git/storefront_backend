@@ -30,7 +30,25 @@ const read = async (req: Request, res: Response) => {
             message: "Product with ID: " + product_id + " was retrieved successfully"
         });
     }catch (error) {
-        res.status(400).json({ message: "Failed to retrieve product because, " + error});
+        res.status(400).send({ message: "Failed to retrieve product because, " + error});
     }
 };
 
+const update = async (req: Request, res: Response) => {
+    const product_id: number = +req.params.sn;
+    const product: Product = {
+        product_id: req.body.product_id,
+        product_name: req.body.product_name,
+        product_price: req.body.product_price,
+        product_category: req.body.product_category
+    }
+    try {
+        const updated_Product = await store.update(product_id, product);
+        res.status(200).json({
+            results: updated_Product,
+            message: "Product with ID: " + product_id + " was successfully updated."
+        });
+    }catch (error) {
+        res.status(400).send({ message: "Failed to update product because, " + error});
+    }
+}
