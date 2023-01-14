@@ -52,3 +52,16 @@ const update = async (req: Request, res: Response) => {
         res.status(400).send({ message: "Failed to update product because, " + error});
     }
 }
+
+const remove = async (req: Request, res: Response) => {
+    const product_id: number = +req.params.sn;
+    try {
+        const removed_product = await store.delete(product_id);
+        res.status(200).json({
+            results: removed_product,
+            message: "Product with ID: " + product_id + " was successfully deleted."
+        });
+    }catch(error) {
+        res.status(400).send({message: "Failed to delete product because, " + error});
+    }
+}
