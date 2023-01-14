@@ -20,3 +20,17 @@ const create = async (req: Request, res: Response) => {
         res.status(400).send({message: "Failed to add product because, " + error});
     }
 };
+
+const read = async (req: Request, res: Response) => {
+    try {
+        const product_id: number = parseInt(req.params.sn);
+        const product = await store.read(product_id);
+        res.status(200).json({
+            results: product,
+            message: "Product with ID: " + product_id + " was retrieved successfully"
+        });
+    }catch (error) {
+        res.status(400).json({ message: "Failed to retrieve product because, " + error});
+    }
+};
+
