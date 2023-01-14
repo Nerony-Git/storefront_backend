@@ -24,4 +24,18 @@ export class ProductStore {
         }
     }
 
+    async read(pid: number): Promise<Product> {
+        try{
+            const conn = await client.connect();
+            const sql = "SELECT * FROM product_details WHERE sn = $1";
+            const result = await conn.query(sql, [pid]);
+            const product = result.rows[0];
+            conn.release();
+
+            return product;
+        }catch(error){
+            throw new Error("Failed to load product details of product with ID: " + pid + " because, " + error);
+        }
+    }
+
 }
