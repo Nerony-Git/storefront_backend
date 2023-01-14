@@ -6,8 +6,11 @@ const order_routes = (app: Application) => {
     app.get("/orders", token_authenticator, order_handler.default.index);
     app.get("/orders/:id", token_authenticator, order_handler.default.read);
     app.post("/orders", token_authenticator, order_handler.default.create);
-    app.delete("/orders/:id", token_authenticator, order_handler.default.remove)
-
+    app.delete(
+        "/orders/:id",
+        token_authenticator,
+        order_handler.default.remove
+    );
 };
 
 export default order_routes;
