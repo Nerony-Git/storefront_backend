@@ -1,6 +1,18 @@
 import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 
+const token_generator = (username: string, user_id: string) => {
+    const access_Token: string = jwt.sign(
+        {
+            user: username, 
+            userID: user_id,
+        }, 
+        process.env.TOKEN_SECRET as string,
+        {expiresIn: process.env.TOKEN_EXPIRES as string}
+    )
+    return access_Token;
+};
+
 const token_authenticator = (
     req: Request,
     res: Response,
@@ -16,4 +28,7 @@ const token_authenticator = (
     }
 };
 
-export default token_authenticator;
+export default {
+    token_generator,
+    token_authenticator
+}
