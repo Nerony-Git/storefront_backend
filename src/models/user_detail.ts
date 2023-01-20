@@ -43,7 +43,7 @@ export class UserStore {
     async read(uid: string): Promise<User> {
         try {
             const conn = await client.connect();
-            const sql = "SELECT * FROM user_details WHERE sn = $1";
+            const sql = "SELECT * FROM user_details WHERE user_id = $1";
             const result = await conn.query(sql, [uid]);
             conn.release();
 

@@ -1,5 +1,5 @@
 import { Application } from "express";
-import token_authenticator from "../middleware/verify_jwt";
+import * as token_process from "../middleware/verify_jwt";
 import * as product_detail_handler from "../handlers/product_detail";
 
 const products_routes = (app: Application) => {
@@ -7,17 +7,17 @@ const products_routes = (app: Application) => {
     app.get("/products/:id", product_detail_handler.default.read);
     app.post(
         "/products",
-        token_authenticator,
+        token_process.default.token_authenticator,
         product_detail_handler.default.create
     );
     app.put(
         "/products/:id",
-        token_authenticator,
+        token_process.default.token_authenticator,
         product_detail_handler.default.update
     );
     app.delete(
         "/products/:id",
-        token_authenticator,
+        token_process.default.token_authenticator,
         product_detail_handler.default.remove
     );
 };

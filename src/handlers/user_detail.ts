@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { User, UserStore } from "../models/user_detail";
 import * as jwt from "jsonwebtoken";
 
@@ -80,10 +80,17 @@ const token_decoded = async (req: Request, res: Response) => {
     res.send(res.locals.decoded.user);
 };
 
+const authorized = async (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).send({
+        message: "User Authorized"
+    });
+};
+
 export default {
     create,
     read,
     index,
     login,
     token_decoded,
+    authorized
 };
