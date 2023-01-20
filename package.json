@@ -7,9 +7,11 @@
     "build": "npx tsc",
     "jasmine": "jasmine",
     "lint": "eslint src/**/*.ts",
+    "clean": "rimraf ./build",
     "prettier": "prettier --config .prettierrc src --write",
     "watch": "tsc-watch --esModuleInterop src/server.ts",
-    "start": "nodemon src/server.ts"
+    "start": "nodemon src/server.ts",
+    "test": "cross-env ENV=test && db-migrate -e test up && npm run build && npm run jasmine && db-migrate -e test reset"
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,7 @@
     "@types/jsonwebtoken": "^9.0.0",
     "@types/node": "^18.11.18",
     "@types/pg": "^8.6.6",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "db-migrate": "^0.11.13",
