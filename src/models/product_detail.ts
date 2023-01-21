@@ -2,7 +2,7 @@ import client from "../database";
 
 export type Product = {
     sn?: number;
-    product_id: string;
+    product_id?: string;
     product_name: string;
     product_price: number;
     product_category: string;
@@ -18,7 +18,7 @@ export class ProductStore {
                 p.product_id,
                 p.product_name,
                 p.product_price,
-                p.product_category,
+                p.product_category
             ]);
             const product = result.rows[0];
             conn.release();
@@ -37,7 +37,7 @@ export class ProductStore {
     async read(pid: number): Promise<Product> {
         try {
             const conn = await client.connect();
-            const sql = "SELECT * FROM product_details WHERE sn = $1";
+            const sql = "SELECT * FROM product_details WHERE product_id = $1";
             const result = await conn.query(sql, [pid]);
             const product = result.rows[0];
             conn.release();
@@ -53,17 +53,16 @@ export class ProductStore {
         }
     }
 
-    async update(id: number, p: Product): Promise<Product> {
+    async update(pid: number, p: Product): Promise<Product> {
         try {
             const conn = await client.connect();
             const sql =
-                "UPDATE product_details SET product_id = $1, product_name = $2, product_price= $3, product_category = $4 WHERE sn = $5 RETURNING *";
+                "UPDATE product_details SET product_name = $2, product_price= $3, product_category = $4 WHERE product_id = $1 RETURNING *";
             const result = await conn.query(sql, [
-                p.product_id,
+                pid,
                 p.product_name,
                 p.product_price,
-                p.product_category,
-                id,
+                p.product_category
             ]);
             const product = result.rows[0];
             conn.release();
@@ -82,7 +81,7 @@ export class ProductStore {
     async delete(pid: number): Promise<Product> {
         try {
             const conn = await client.connect();
-            const sql = "DELETE FROM product_details WHERE sn = $1";
+            const sql = "DELETE FROM product_details WHERE product_id = $1";
             const result = await conn.query(sql, [pid]);
             const product = result.rows[0];
             conn.release();
