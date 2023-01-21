@@ -8,7 +8,7 @@ const create = async (req: Request, res: Response) => {
         product_id: req.body.product_id,
         product_name: req.body.product_name,
         product_price: req.body.product_price,
-        product_category: req.body.product_category,
+        product_category: req.body.product_category
     };
     try {
         const new_product = await store.create(product);
@@ -27,14 +27,14 @@ const create = async (req: Request, res: Response) => {
 };
 
 const read = async (req: Request, res: Response) => {
+    const pid: number = +req.params.id;
     try {
-        const product_id: number = parseInt(req.params.id);
-        const product = await store.read(product_id);
+        const product = await store.read(pid);
         res.status(200).json({
             results: product,
             message:
                 "Product with ID: " +
-                product_id +
+                pid +
                 " was retrieved successfully",
         });
     } catch (error) {
@@ -45,19 +45,18 @@ const read = async (req: Request, res: Response) => {
 };
 
 const update = async (req: Request, res: Response) => {
-    const product_id: number = +req.params.id;
+    const pid: number = +req.params.id;
     const product: Product = {
-        product_id: req.body.product_id,
         product_name: req.body.product_name,
         product_price: req.body.product_price,
-        product_category: req.body.product_category,
+        product_category: req.body.product_category
     };
     try {
-        const updated_Product = await store.update(product_id, product);
+        const updated_Product = await store.update(pid, product);
         res.status(200).json({
             results: updated_Product,
             message:
-                "Product with ID: " + product_id + " was successfully updated.",
+                "Product with ID: " + pid + " was successfully updated.",
         });
     } catch (error) {
         res.status(400).send({
@@ -67,13 +66,13 @@ const update = async (req: Request, res: Response) => {
 };
 
 const remove = async (req: Request, res: Response) => {
-    const product_id: number = +req.params.id;
+    const pid: number = +req.params.id;
     try {
-        const removed_product = await store.delete(product_id);
+        const removed_product = await store.delete(pid);
         res.status(200).json({
             results: removed_product,
             message:
-                "Product with ID: " + product_id + " was successfully deleted.",
+                "Product with ID: " + pid + " was successfully deleted.",
         });
     } catch (error) {
         res.status(400).send({
