@@ -88,7 +88,7 @@ export class UserStore {
     async delete(uid: string): Promise<User> {
         try {
             const conn = await client.connect();
-            const sql = "DELETE FROM user_details WHERE sn = $1";
+            const sql = "DELETE FROM user_details WHERE user_id = $1";
             const result = await conn.query(sql, [uid]);
             const user = result.rows[0];
             conn.release();
