@@ -78,6 +78,7 @@ const remove = async (req: Request, res: Response) => {
         res.status(400).send({
             message: "Failed to delete product because, " + error,
         });
+        console.log(error);
     }
 };
 
