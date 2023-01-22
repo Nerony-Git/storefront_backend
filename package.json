@@ -7,7 +7,6 @@
     "build": "npx tsc",
     "jasmine": "jasmine",
     "lint": "eslint src/**/*.ts",
-    "clean": "rimraf ./build",
     "prettier": "prettier --config .prettierrc src --write",
     "watch": "tsc-watch --esModuleInterop src/server.ts",
     "start": "nodemon src/server.ts",
