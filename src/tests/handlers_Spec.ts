@@ -1,7 +1,6 @@
 import supertest from "supertest";
 import app from "../server";
 import * as token_process from "../middleware/verify_jwt";
-import exp from "constants";
 
 const request: supertest.SuperTest<supertest.Test> = supertest(app);
 const testAccount = {
@@ -138,12 +137,6 @@ describe("Testing Orders Handler.", (): void => {
 
 describe("Deleting Data Entries.", (): void => {
     describe("Testing valid arguments:", (): void => {
-        it("Delete User Details.", async () => {
-            const response: supertest.Response = await request.delete("/users/STORE_0031").set("Authorization", test_token);
-
-            expect(response.status).toBe(200);
-        });
-
         it("Delete Order_Product Details.", async () => {
             const response: supertest.Response = await request.delete("/orders/products/1").set("Authorization", test_token);
 
@@ -158,6 +151,12 @@ describe("Deleting Data Entries.", (): void => {
 
         it("Delete Order", async () => {
             const response: supertest.Response = await request.delete("/orders/1").set("Authorization", test_token);
+
+            expect(response.status).toBe(200);
+        });
+
+        it("Delete User Details.", async () => {
+            const response: supertest.Response = await request.delete("/users/1").set("Authorization", test_token);
 
             expect(response.status).toBe(200);
         });
