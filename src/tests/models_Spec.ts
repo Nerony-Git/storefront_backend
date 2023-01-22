@@ -41,3 +41,4 @@ describe("Testing User Details Model.", (): void => {
         });
     });
 });
+
