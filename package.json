@@ -11,7 +11,7 @@
     "prettier": "prettier --config .prettierrc src --write",
     "watch": "tsc-watch --esModuleInterop src/server.ts",
     "start": "nodemon src/server.ts",
-    "test": "cross-env ENV=test && db-migrate -e test up && npm run build && npm run jasmine && db-migrate -e test reset"
+    "test": "set ENV=test && db-migrate -e test up && npm run build && npm run jasmine && db-migrate -e test reset"
   },
   "repository": {
     "type": "git",
