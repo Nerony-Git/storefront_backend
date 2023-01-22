@@ -38,7 +38,7 @@ const read = async (req: Request, res: Response) => {
 const remove = async (req: Request, res: Response) => {
     const uid: number = +req.params.id;
     try {
-        const deleted_Product = await store.delete(String(uid));
+        const deleted_Product = await store.delete(uid);
         res.json(deleted_Product);
     } catch (error) {
         res.status(400);
