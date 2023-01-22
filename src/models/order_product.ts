@@ -8,7 +8,11 @@ export type Order_Product = {
 };
 
 export class Order_ProductStore {
-    async addProduct(quantity: number, order_id: string, product_id: string): Promise<Order_Product> {
+    async addProduct(
+        quantity: number,
+        order_id: string,
+        product_id: string
+    ): Promise<Order_Product> {
         try {
             const conn = await client.connect();
             const sql =

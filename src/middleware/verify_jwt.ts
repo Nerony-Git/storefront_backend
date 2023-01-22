@@ -4,12 +4,12 @@ import * as jwt from "jsonwebtoken";
 const token_generator = (username: string, user_id: string) => {
     const access_Token: string = jwt.sign(
         {
-            user: username, 
+            user: username,
             userID: user_id,
-        }, 
+        },
         process.env.TOKEN_SECRET as string,
-        {expiresIn: process.env.TOKEN_EXPIRES as string}
-    )
+        { expiresIn: process.env.TOKEN_EXPIRES as string }
+    );
     return access_Token;
 };
 
@@ -30,5 +30,5 @@ const token_authenticator = (
 
 export default {
     token_generator,
-    token_authenticator
-}
+    token_authenticator,
+};

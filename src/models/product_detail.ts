@@ -18,7 +18,7 @@ export class ProductStore {
                 p.product_id,
                 p.product_name,
                 p.product_price,
-                p.product_category
+                p.product_category,
             ]);
             const product = result.rows[0];
             conn.release();
@@ -62,7 +62,7 @@ export class ProductStore {
                 pid,
                 p.product_name,
                 p.product_price,
-                p.product_category
+                p.product_category,
             ]);
             const product = result.rows[0];
             conn.release();

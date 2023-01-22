@@ -3,7 +3,6 @@ import { ProductStore } from "../models/product_detail";
 import { OrderStore } from "../models/order";
 import { Order_ProductStore } from "../models/order_product";
 
-
 const user_store = new UserStore();
 const product_store = new ProductStore();
 const order_store = new OrderStore();
@@ -17,7 +16,7 @@ describe("Testing User Details Model.", (): void => {
                 first_name: "Dummy",
                 last_name: "Account",
                 username: "Admin2",
-                password: "root@123"
+                password: "root@123",
             });
 
             expect(results).toBeDefined;
@@ -47,13 +46,13 @@ describe("Testing User Details Model.", (): void => {
 });
 
 describe("Testing Product Details Model.", (): void => {
-    describe("Testing valid arguments:", (): void =>{
+    describe("Testing valid arguments:", (): void => {
         it("Create a new product", async (): Promise<void> => {
             const result = await product_store.create({
                 product_id: "10768",
                 product_name: "Pespsi Max",
                 product_price: 39,
-                product_category: "Drinks"
+                product_category: "Drinks",
             });
 
             expect(result).toBeDefined;
@@ -77,7 +76,7 @@ describe("Testing Product Details Model.", (): void => {
             const results = await product_store.update(pid, {
                 product_name: "Pepsi Max",
                 product_price: 23,
-                product_category: "Drinks"
+                product_category: "Drinks",
             });
 
             expect(results).toBeDefined;
@@ -91,7 +90,7 @@ describe("Testing Orders and Order Products Models.", (): void => {
         it("Create an order.", async (): Promise<void> => {
             const results = await order_store.create({
                 user_id: "2",
-                status: "Active"
+                status: "Active",
             });
 
             expect(results).toBeDefined;
@@ -101,7 +100,11 @@ describe("Testing Orders and Order Products Models.", (): void => {
             const order_id = "2";
             const product_id = "2";
             const quantity = 30;
-            const result = await order_product_store.addProduct(quantity, order_id, product_id);
+            const result = await order_product_store.addProduct(
+                quantity,
+                order_id,
+                product_id
+            );
 
             expect(result).toBeDefined;
         });
@@ -118,33 +121,32 @@ describe("Testing Orders and Order Products Models.", (): void => {
 
             expect(results).toBeDefined;
         });
-
     });
 });
 
 describe("Deleting Data Entries During Model Test:", (): void => {
-    it("Delete Order_Product Data.", async(): Promise<void> => {
+    it("Delete Order_Product Data.", async (): Promise<void> => {
         const oid = 2;
         const results = await order_product_store.delete(oid);
 
         expect(results).toBeDefined;
     });
 
-    it("Delete Product Data.", async(): Promise<void> => {
+    it("Delete Product Data.", async (): Promise<void> => {
         const pid = 2;
         const results = await product_store.delete(pid);
 
         expect(results).toBeDefined;
     });
 
-    it("Delete Order Data.", async(): Promise<void> => {
+    it("Delete Order Data.", async (): Promise<void> => {
         const oid = 2;
         const results = await order_store.delete(oid);
 
         expect(results).toBeDefined;
     });
 
-    it("Delete Users Data.", async(): Promise<void> => {
+    it("Delete Users Data.", async (): Promise<void> => {
         const uid = 2;
         const results = await user_store.delete(uid);
 

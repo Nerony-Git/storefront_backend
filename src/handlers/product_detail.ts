@@ -8,7 +8,7 @@ const create = async (req: Request, res: Response) => {
         product_id: req.body.product_id,
         product_name: req.body.product_name,
         product_price: req.body.product_price,
-        product_category: req.body.product_category
+        product_category: req.body.product_category,
     };
     try {
         const new_product = await store.create(product);
@@ -32,10 +32,7 @@ const read = async (req: Request, res: Response) => {
         const product = await store.read(pid);
         res.status(200).json({
             results: product,
-            message:
-                "Product with ID: " +
-                pid +
-                " was retrieved successfully",
+            message: "Product with ID: " + pid + " was retrieved successfully",
         });
     } catch (error) {
         res.status(400).send({
@@ -49,14 +46,13 @@ const update = async (req: Request, res: Response) => {
     const product: Product = {
         product_name: req.body.product_name,
         product_price: req.body.product_price,
-        product_category: req.body.product_category
+        product_category: req.body.product_category,
     };
     try {
         const updated_Product = await store.update(pid, product);
         res.status(200).json({
             results: updated_Product,
-            message:
-                "Product with ID: " + pid + " was successfully updated.",
+            message: "Product with ID: " + pid + " was successfully updated.",
         });
     } catch (error) {
         res.status(400).send({
@@ -71,8 +67,7 @@ const remove = async (req: Request, res: Response) => {
         const removed_product = await store.delete(pid);
         res.status(200).json({
             results: removed_product,
-            message:
-                "Product with ID: " + pid + " was successfully deleted.",
+            message: "Product with ID: " + pid + " was successfully deleted.",
         });
     } catch (error) {
         res.status(400).send({

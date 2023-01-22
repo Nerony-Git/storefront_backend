@@ -89,7 +89,7 @@ const login = async (req: Request, res: Response) => {
 
 const authorized = async (req: Request, res: Response) => {
     res.status(200).send({
-        message: "User Authorized"
+        message: "User Authorized",
     });
 };
 
@@ -99,5 +99,5 @@ export default {
     remove,
     index,
     login,
-    authorized
+    authorized,
 };

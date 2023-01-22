@@ -9,7 +9,11 @@ const addProduct = async (req: Request, res: Response) => {
     const quantity: number = parseInt(req.body.quantity);
 
     try {
-        const added_product = await store.addProduct(quantity, order_id, product_id);
+        const added_product = await store.addProduct(
+            quantity,
+            order_id,
+            product_id
+        );
         res.json(added_product);
     } catch (error) {
         res.status(400);
@@ -36,5 +40,5 @@ const remove = async (req: Request, res: Response) => {
 
 export default {
     addProduct,
-    remove
+    remove,
 };
