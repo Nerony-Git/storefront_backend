@@ -1,9 +1,13 @@
 import { UserStore } from "../models/user_detail";
 import { ProductStore } from "../models/product_detail";
+import { OrderStore } from "../models/order";
+import { Order_ProductStore } from "../models/order_product";
 
 
 const user_store = new UserStore();
 const product_store = new ProductStore();
+const order_store = new OrderStore();
+const order_product_store = new Order_ProductStore();
 
 describe("Testing User Details Model.", (): void => {
     describe("Testing valid arguments:", (): void => {
@@ -79,5 +83,41 @@ describe("Testing Product Details Model.", (): void => {
             expect(results).toBeDefined;
             expect(results.product_price).toEqual(23);
         });
+    });
+});
+
+describe("Testing Orders and Order Products Models.", (): void => {
+    describe("Testing valid arguments:", (): void => {
+        it("Create an order.", async (): Promise<void> => {
+            const results = await order_store.create({
+                user_id: "2",
+                status: "Active"
+            });
+
+            expect(results).toBeDefined;
+        });
+
+        it("Add order to order_products.", async (): Promise<void> => {
+            const order_id = "2";
+            const product_id = "2";
+            const quantity = 30;
+            const result = await order_product_store.addProduct(quantity, order_id, product_id);
+
+            expect(result).toBeDefined;
+        });
+
+        it("Select a specific order.", async (): Promise<void> => {
+            const oid = 2;
+            const results = await order_store.read(oid);
+
+            expect(results).toBeDefined;
+        });
+
+        it("List all orders.", async (): Promise<void> => {
+            const results = await order_store.index();
+
+            expect(results).toBeDefined;
+        });
+
     });
 });
