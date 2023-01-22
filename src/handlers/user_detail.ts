@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { User, UserStore } from "../models/user_detail";
 import * as jwt from "jsonwebtoken";
 
@@ -29,6 +29,17 @@ const read = async (req: Request, res: Response) => {
     try {
         const user = await store.read(req.params.sn);
         res.json(user);
+    } catch (error) {
+        res.status(400);
+        res.json(error);
+    }
+};
+
+const remove = async (req: Request, res: Response) => {
+    const uid: number = +req.params.id;
+    try {
+        const deleted_Product = await store.delete(String(uid));
+        res.json(deleted_Product);
     } catch (error) {
         res.status(400);
         res.json(error);
@@ -76,11 +87,7 @@ const login = async (req: Request, res: Response) => {
     }
 };
 
-const token_decoded = async (req: Request, res: Response) => {
-    res.send(res.locals.decoded.user);
-};
-
-const authorized = async (req: Request, res: Response, next: NextFunction) => {
+const authorized = async (req: Request, res: Response) => {
     res.status(200).send({
         message: "User Authorized"
     });
@@ -89,8 +96,8 @@ const authorized = async (req: Request, res: Response, next: NextFunction) => {
 export default {
     create,
     read,
+    remove,
     index,
     login,
-    token_decoded,
     authorized
 };
