@@ -42,3 +42,42 @@ describe("Testing User Details Model.", (): void => {
     });
 });
 
+describe("Testing Product Details Model.", (): void => {
+    describe("Testing valid arguments:", (): void =>{
+        it("Create a new product", async (): Promise<void> => {
+            const result = await product_store.create({
+                product_id: "10768",
+                product_name: "Pespsi Max",
+                product_price: 39,
+                product_category: "Drinks"
+            });
+
+            expect(result).toBeDefined;
+        });
+
+        it("Select a specific product.", async (): Promise<void> => {
+            const pid = 10768;
+            const results = await product_store.read(pid);
+
+            expect(results).toBeDefined;
+        });
+
+        it("List all products.", async (): Promise<void> => {
+            const results = await product_store.index();
+
+            expect(results).toBeDefined;
+        });
+
+        it("Update details of product.", async (): Promise<void> => {
+            const pid = 10768;
+            const results = await product_store.update(pid, {
+                product_name: "Pepsi Max",
+                product_price: 23,
+                product_category: "Drinks"
+            });
+
+            expect(results).toBeDefined;
+            expect(results.product_price).toEqual(23);
+        });
+    });
+});
