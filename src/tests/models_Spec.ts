@@ -121,3 +121,33 @@ describe("Testing Orders and Order Products Models.", (): void => {
 
     });
 });
+
+describe("Deleting Data Entries During Model Test:", (): void => {
+    it("Delete Order_Product Data.", async(): Promise<void> => {
+        const oid = 2;
+        const results = await order_product_store.delete(oid);
+
+        expect(results).toBeDefined;
+    });
+
+    it("Delete Product Data.", async(): Promise<void> => {
+        const pid = 2;
+        const results = await product_store.delete(pid);
+
+        expect(results).toBeDefined;
+    });
+
+    it("Delete Order Data.", async(): Promise<void> => {
+        const oid = 2;
+        const results = await order_store.delete(oid);
+
+        expect(results).toBeDefined;
+    });
+
+    it("Delete Users Data.", async(): Promise<void> => {
+        const uid = 2;
+        const results = await user_store.delete(uid);
+
+        expect(results).toBeDefined;
+    });
+});
