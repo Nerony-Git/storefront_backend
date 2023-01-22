@@ -1,17 +1,15 @@
 import { Request, Response } from "express";
-import { Order_Product, Order_ProductStore } from "../models/order_product";
+import { Order_ProductStore } from "../models/order_product";
 
 const store = new Order_ProductStore();
 
 const addProduct = async (req: Request, res: Response) => {
-    const order_product: Order_Product = {
-        order_id: req.body.order_id,
-        product_id: req.body.product_id,
-        quantity: req.body.quantity,
-    };
+    const order_id: string = req.body.order_id;
+    const product_id: string = req.body.product_id;
+    const quantity: number = parseInt(req.body.quantity);
 
     try {
-        const added_product = await store.addProduct(order_product);
+        const added_product = await store.addProduct(quantity, order_id, product_id);
         res.json(added_product);
     } catch (error) {
         res.status(400);
@@ -19,4 +17,24 @@ const addProduct = async (req: Request, res: Response) => {
     }
 };
 
-export default addProduct;
+const remove = async (req: Request, res: Response) => {
+    const order_id: number = +req.params.id;
+    try {
+        const remove_order = await store.delete(order_id);
+        res.status(200).json({
+            results: remove_order,
+            message:
+                "Order with ID: " + order_id + " was deleted successfully.",
+        });
+    } catch (error) {
+        res.status(400).send({
+            message: "Failed to delete order because, " + error,
+        });
+        console.log(error);
+    }
+};
+
+export default {
+    addProduct,
+    remove
+};
