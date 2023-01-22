@@ -9,14 +9,10 @@ const user_routes = (app: Application) => {
         token_process.default.token_authenticator,
         user_details_handler.default.read
     );
-    app.get(
-        "/users/decoded",
-        token_process.default.token_authenticator,
-        user_details_handler.default.token_decoded
-    );
     app.get("/users/authorize", token_process.default.token_authenticator, user_details_handler.default.authorized);
     app.post("/signin", user_details_handler.default.login);
     app.post("/signup", user_details_handler.default.create);
+    app.delete("/users/:id", token_process.default.token_authenticator, user_details_handler.default.remove);
 };
 
 export default user_routes;
