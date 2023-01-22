@@ -51,6 +51,7 @@ const remove = async (req: Request, res: Response) => {
         res.status(400).send({
             message: "Failed to delete order because, " + error,
         });
+        console.log(error);
     }
 };
 
